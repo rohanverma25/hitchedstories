@@ -1,0 +1,145 @@
+/*
+ * Blog post page styles. The homepage, header and footer use Tailwind (resources/css/app.css).
+ * Everything sits in the "legacy" layer, below Tailwind utilities, so it never overrides them.
+ */
+@layer legacy {
+    :root {
+        --bg: var(--color-paper);
+        --accent-bg: var(--color-sand);
+        --text: var(--color-ink);
+        --muted: var(--color-muted);
+        --line: var(--color-line);
+        --button: var(--color-gold);
+        --gold: var(--color-gold);
+        --ease: var(--ease-site);
+    }
+
+    p { margin: 0 0 1.1em; }
+
+    .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: .9rem;
+        margin: 0 0 1.1rem;
+        font-size: .8rem;
+        font-weight: 600;
+        letter-spacing: .32em;
+        text-transform: uppercase;
+        color: var(--muted);
+    }
+    .section-head .eyebrow::before, .section-head .eyebrow::after,
+    .narrow .eyebrow::before, .narrow .eyebrow::after { content: ""; width: 34px; height: 1px; background: var(--gold); }
+
+    .container { width: min(1240px, 100% - 3rem); margin-inline: auto; }
+    .narrow { max-width: 780px; text-align: center; }
+    .section { padding: clamp(4.5rem, 10vw, 8.5rem) 0; }
+    .section-accent { background: var(--accent-bg); }
+    .section-head { margin-bottom: clamp(2.5rem, 5vw, 4rem); text-align: center; }
+    .lead { margin-top: 1.5rem; font-size: 1.4rem; font-weight: 300; }
+
+    /* Buttons and links */
+    .btn {
+        position: relative;
+        display: inline-block;
+        padding: 1rem 2.4rem;
+        border: 1px solid transparent;
+        font-family: var(--font-body);
+        font-size: .8rem;
+        font-weight: 600;
+        letter-spacing: .28em;
+        text-transform: uppercase;
+        text-decoration: none;
+        cursor: pointer;
+        overflow: hidden;
+        z-index: 0;
+        transition: color .45s var(--ease), border-color .45s var(--ease);
+    }
+    .btn::before { content: ""; position: absolute; inset: 0; z-index: -1; transform: scaleY(0); transform-origin: bottom; transition: transform .45s var(--ease); }
+    .btn:hover::before { transform: scaleY(1); }
+    .btn-solid { color: #fff; background: var(--button); }
+    .btn-solid::before { background: var(--text); }
+
+    .text-link {
+        display: inline-block;
+        padding-bottom: .3rem;
+        font-size: .76rem;
+        font-weight: 600;
+        letter-spacing: .26em;
+        text-transform: uppercase;
+        text-decoration: none;
+        background: linear-gradient(currentColor, currentColor) left bottom / 100% 1px no-repeat;
+        transition: background-size .45s var(--ease), color .3s;
+    }
+    .text-link:hover { color: var(--gold); background-size: 40% 1px; }
+
+    /* "More from the journal" cards */
+    .journal-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: clamp(1.5rem, 3.5vw, 3rem); }
+    .post-image { display: block; overflow: hidden; margin-bottom: 1.6rem; aspect-ratio: 4 / 3; background: var(--accent-bg); }
+    .post-image img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.3s var(--ease); }
+    .post:hover .post-image img { transform: scale(1.06); }
+    .post-date { margin: 0 0 .6rem; font-size: .72rem; font-weight: 600; letter-spacing: .28em; text-transform: uppercase; color: var(--gold); }
+    .post h3 { margin-bottom: .8rem; font-size: 1.7rem; line-height: 1.2; }
+    .post h3 a { text-decoration: none; transition: color .3s; }
+    .post h3 a:hover { color: var(--gold); }
+    .post-excerpt { font-size: 1.12rem; color: var(--muted); }
+
+    /* Blog article */
+    .article { padding: calc(72px + clamp(3rem, 7vw, 5.5rem)) 0 clamp(4rem, 8vw, 6.5rem); }
+    .article-head { text-align: center; }
+    .article-head h1 { font-size: clamp(2.3rem, 5vw, 4rem); }
+    .article-head .eyebrow { justify-content: center; }
+    .article-head .lead { margin-top: 1.5rem; }
+    .article-image { margin: clamp(2.5rem, 5vw, 4rem) auto 0; }
+    .article-image img { width: 100%; max-height: 78vh; aspect-ratio: 16 / 9; object-fit: cover; }
+    .article-body { width: min(740px, 100% - 3rem); margin: clamp(2.5rem, 5vw, 4rem) auto 0; font-size: 1.32rem; }
+    .article-body h2, .article-body h3, .article-body h4 { margin: 2.2em 0 .7em; font-family: var(--font-display); font-weight: 400; line-height: 1.2; text-transform: uppercase; }
+    .article-body h2 { font-size: 2.1rem; }
+    .article-body h3 { font-size: 1.7rem; }
+    .article-body h4 { font-size: 1.4rem; }
+    .article-body a { color: var(--gold); text-decoration: underline; }
+    .article-body img { height: auto; margin: 2rem auto; }
+    .article-body ul, .article-body ol { margin: 0 0 1.4em; padding-left: 1.5em; }
+    .article-body ul { list-style: disc; }
+    .article-body ol { list-style: decimal; }
+    .article-body blockquote { margin: 2rem 0; padding-left: 1.5rem; border-left: 1px solid var(--gold); font-size: 1.5rem; font-style: italic; font-weight: 300; }
+    .article-body pre { padding: 1rem 1.25rem; overflow-x: auto; font-size: .95rem; background: var(--accent-bg); }
+    .article-body .ql-align-center { text-align: center; }
+    .article-body .ql-align-right { text-align: right; }
+    .article-body .ql-align-justify { text-align: justify; }
+    .article-body > p:first-child::first-letter { float: left; margin: .12em .12em 0 0; font-family: var(--font-display); font-size: 4.4rem; line-height: .8; color: var(--gold); }
+    .article-body p { margin: 0 0 1.4em; line-height: 1.7; }
+    .breadcrumb { display: flex; flex-wrap: wrap; justify-content: center; gap: .5rem; margin-bottom: 2.25rem; font-size: .8rem; font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--muted); }
+    .breadcrumb a { text-decoration: none; transition: color .3s; }
+    .breadcrumb a:hover { color: var(--gold); }
+    .breadcrumb [aria-current] { color: var(--text); }
+    .article-meta { display: flex; flex-wrap: wrap; justify-content: center; gap: .3rem .75rem; margin: 1.5rem 0 0; font-size: 1.05rem; font-style: italic; color: var(--muted); }
+    .article-share { display: grid; justify-items: center; gap: 1rem; width: min(740px, 100% - 3rem); margin: clamp(3rem, 6vw, 4.5rem) auto 0; padding: 2rem 0; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); text-align: center; }
+    .article-share-label { font-size: .78rem; font-weight: 600; letter-spacing: .26em; text-transform: uppercase; color: var(--muted); }
+    .article-share-links { display: flex; flex-wrap: wrap; justify-content: center; gap: .6rem; }
+    .article-share-links a, .article-share-links button { padding: .55rem 1.15rem; border: 1px solid var(--line); border-radius: 999px; background: none; font: inherit; font-size: 1rem; color: var(--text); text-decoration: none; cursor: pointer; transition: background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease); }
+    .article-share-links a:hover, .article-share-links button:hover { background: var(--text); border-color: var(--text); color: #fff; }
+    .article-share-status { margin: 0; font-style: italic; color: var(--gold); }
+    .article-nav { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; width: min(980px, 100% - 3rem); margin-top: clamp(2.5rem, 5vw, 3.5rem); }
+    .article-nav-link { display: grid; gap: .4rem; padding: 1.5rem 1.75rem; border: 1px solid var(--line); text-decoration: none; transition: border-color .4s var(--ease), background .4s var(--ease); }
+    .article-nav-link:hover { border-color: var(--gold); background: var(--accent-bg); }
+    .article-nav-next { text-align: right; grid-column: 2; }
+    .article-nav-label { font-size: .74rem; font-weight: 600; letter-spacing: .24em; text-transform: uppercase; color: var(--muted); }
+    .article-nav-title { font-family: var(--font-display); font-size: 1.4rem; line-height: 1.25; }
+    .article-cta { text-align: center; }
+    .article-cta h2 { margin-bottom: 1.25rem; font-size: clamp(2rem, 4vw, 3.2rem); }
+    .article-cta .lead { margin-bottom: 2rem; }
+
+    @media (max-width: 640px) {
+        .eyebrow { font-size: .72rem; letter-spacing: .22em; gap: .6rem; }
+        .eyebrow::before, .eyebrow::after { width: 20px !important; }
+        .journal-grid { grid-template-columns: 1fr; }
+        .btn { padding: .95rem 1.8rem; }
+        .article-nav { grid-template-columns: 1fr; }
+        .article-nav-next { grid-column: auto; }
+        .article-body > p:first-child::first-letter { font-size: 3.6rem; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { animation: none !important; transition: none !important; }
+    }
+}

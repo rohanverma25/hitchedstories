@@ -1,0 +1,118 @@
+/* "legacy" holds public/css/site.css (blog post styles), ranked below utilities so it never overrides them. */
+@layer theme, base, legacy, components, utilities;
+
+@import 'tailwindcss' source(none);
+
+/* Only scan the Tailwind views. The blog page still uses site.css class names such as "container". */
+@source '../views/layouts';
+@source '../views/partials';
+@source '../views/components';
+@source '../views/home.blade.php';
+
+@font-face {
+    font-family: "Devira";
+    font-weight: 400;
+    font-style: normal;
+    font-display: swap;
+    src: url("../../public/fonts/derivia-regular-webfont.woff") format("woff");
+}
+
+@theme static {
+    --breakpoint-md: 56.25rem;
+
+    --color-paper: #f9f8f6;
+    --color-sand: #eae9e5;
+    --color-ink: #42403b;
+    --color-muted: #7c7871;
+    --color-line: #d1cfc5;
+    --color-stone: #97938e;
+    --color-gold: #e1a239;
+    --color-night: #2b2a27;
+    --color-mist: #ecebe6;
+    --color-ash: #a9a59d;
+    --color-cream: #f1e6cf;
+    --color-error: #a3362f;
+
+    --font-display: "Devira", "Forum", Georgia, serif;
+    --font-body: "Montserrat", Arial, sans-serif;
+
+    --ease-site: cubic-bezier(.2, .7, .2, 1);
+    --default-transition-timing-function: var(--ease-site);
+
+    --animate-hero-zoom: hero-zoom 14s var(--ease-site) both;
+    --animate-fade-up: fade-up 1.4s var(--ease-site) .2s both;
+
+    @keyframes hero-zoom {
+        from { transform: scale(1.06); }
+        to { transform: scale(1); }
+    }
+    @keyframes fade-up {
+        from { opacity: 0; transform: translateY(26px); }
+        to { opacity: 1; transform: none; }
+    }
+}
+
+/* State classes added by public/js/site.js. */
+@custom-variant solid (&:where(.is-solid, .is-solid *, .page-plain *));
+@custom-variant menu-open (&:where(.menu-open *));
+
+@utility page-width {
+    width: min(1240px, 100% - 3rem);
+    margin-inline: auto;
+}
+
+@utility section-y {
+    padding-block: clamp(4.5rem, 10vw, 4.5rem);
+}
+
+@utility line-icon {
+    fill: none;
+    stroke: currentColor;
+    stroke-width: 1.3;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+
+@layer base {
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+    .section-y{
+        padding: 60px 0px !important;
+    }
+    body {
+        font-family: var(--font-body);
+        font-size: 1rem;
+        line-height: 1.65;
+        color: var(--color-ink);
+        background: var(--color-paper);
+        -webkit-font-smoothing: antialiased;
+        overflow-x: hidden;
+
+        @variant max-md { font-size: 1.15rem; }
+    }
+
+    ::selection { background: var(--color-gold); color: #fff; }
+
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.12; letter-spacing: .01em; text-transform: uppercase; }
+    h1 { font-size: clamp(2.6rem, 6.4vw, 5.4rem); }
+    h2 { font-size: clamp(2rem, 4vw, 3.3rem); }
+    h3 { font-size: 1.65rem; }
+    h1 em, h2 em { font-family: var(--font-body); font-style: italic; font-weight: 300; }
+    h2 em { color: var(--color-gold); }
+
+    :focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
+
+    @media (prefers-reduced-motion: reduce) {
+        html { scroll-behavior: auto; }
+        *, ::before, ::after { animation: none !important; transition: none !important; }
+    }
+}
+
+@layer components {
+    /* Scroll reveal: site.js adds .is-visible as each .reveal element enters the viewport. */
+    .js .reveal { opacity: 0; transform: translateY(34px); transition: opacity 1.1s var(--ease-site), transform 1.1s var(--ease-site); }
+    .js .reveal.is-visible { opacity: 1; transform: none; }
+
+    @media (prefers-reduced-motion: reduce) {
+        .js .reveal { opacity: 1; transform: none; }
+    }
+}
