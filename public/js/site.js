@@ -44,16 +44,31 @@
         reveals.forEach(function (el) { el.classList.add('is-visible'); });
     }
 
-    // Gallery slider: arrow buttons and click-and-drag.
+    // Gallery slider: one photo centred, arrow buttons step one photo, click-and-drag.
     var slider = document.getElementById('slider');
     if (slider) {
-        var step = function () {
-            var slide = slider.querySelector('.slide');
-            return slide ? slide.getBoundingClientRect().width + parseFloat(getComputedStyle(slider).columnGap || 0) : 300;
+        var gallerySlides = slider.querySelectorAll('.slide');
+        var centreOf = function (slide) {
+            return slide.offsetLeft - (slider.clientWidth - slide.offsetWidth) / 2;
         };
+        var centredIndex = function () {
+            var best = 0;
+            gallerySlides.forEach(function (slide, i) {
+                if (Math.abs(centreOf(slide) - slider.scrollLeft) < Math.abs(centreOf(gallerySlides[best]) - slider.scrollLeft)) best = i;
+            });
+            return best;
+        };
+        var showSlide = function (index, smooth) {
+            var slide = gallerySlides[Math.max(0, Math.min(index, gallerySlides.length - 1))];
+            if (slide) slider.scrollTo({ left: centreOf(slide), behavior: smooth && !reduceMotion ? 'smooth' : 'auto' });
+        };
+        // Start on the second photo so there is one peeking in on each side.
+        var startSlider = function () { showSlide(1, false); };
+        if (document.readyState === 'complete') startSlider(); else window.addEventListener('load', startSlider);
+
         document.querySelectorAll('[data-slide]').forEach(function (button) {
             button.addEventListener('click', function () {
-                slider.scrollBy({ left: (button.dataset.slide === 'next' ? 1 : -1) * step() * 2, behavior: 'smooth' });
+                showSlide(centredIndex() + (button.dataset.slide === 'next' ? 1 : -1), true);
             });
         });
 

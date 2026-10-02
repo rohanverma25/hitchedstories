@@ -26,7 +26,7 @@
                     @if ($page == $paginator->currentPage())
                         <span class="{{ $circle }} border-transparent bg-ink text-white" aria-current="page">{{ str_pad($page, 2, '0', STR_PAD_LEFT) }}</span>
                     @else
-                        <a class="{{ $circle }} border-transparent hover:border-gold hover:text-gold" href="{{ $url }}" aria-label="Page {{ $page }}">{{ str_pad($page, 2, '0', STR_PAD_LEFT) }}</a>
+                        <a class="{{ $circle }} border-transparent hover:border-ink" href="{{ $url }}" aria-label="Page {{ $page }}">{{ str_pad($page, 2, '0', STR_PAD_LEFT) }}</a>
                     @endif
                 @endforeach
             @endif

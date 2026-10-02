@@ -323,9 +323,49 @@ a.btn { text-decoration: none; text-align: center; }
 .card-hint { margin: -.5rem 0 1rem; }
 .logo-preview { display: block; max-width: 100%; max-height: 120px; margin-bottom: 1rem; padding: .75rem; border: 1px solid var(--border); border-radius: 10px; object-fit: contain; background: repeating-conic-gradient(#f4eeeb 0% 25%, #fff 0% 50%) 50% / 16px 16px; }
 
+/* Menu button and backdrop, used when the sidebar becomes a slide-in menu. */
+.menu-button {
+    display: none;
+    place-items: center;
+    width: 40px;
+    height: 40px;
+    flex-shrink: 0;
+    padding: 0;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    color: var(--text);
+    background: var(--surface);
+    cursor: pointer;
+}
+.menu-button svg { width: 20px; height: 20px; }
+.menu-button:focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.menu-backdrop { position: fixed; inset: 0; z-index: 40; background: rgba(42, 31, 45, .45); }
+.menu-backdrop[hidden] { display: none; }
+
 @media (max-width: 980px) {
     .form-grid { grid-template-columns: 1fr; }
     .form-side { position: static; }
+
+    .sidebar {
+        position: fixed;
+        inset: 0 auto 0 0;
+        z-index: 50;
+        width: min(280px, 85vw);
+        overflow-y: auto;
+        transform: translateX(-100%);
+        transition: transform .25s ease;
+    }
+    .menu-open .sidebar { transform: none; box-shadow: 12px 0 40px rgba(42, 31, 45, .25); }
+    .menu-open { overflow: hidden; }
+    .menu-button { display: grid; }
+
+    .topbar { position: sticky; top: 0; z-index: 30; justify-content: flex-start; padding: .9rem 1.25rem; }
+    .topbar h1 { flex: 1; min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-size: 1.35rem; }
+    .content { padding: 1.5rem 1.25rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .sidebar { transition: none; }
 }
 
 @media (max-width: 860px) {
@@ -335,13 +375,25 @@ a.btn { text-decoration: none; text-align: center; }
 }
 
 @media (max-width: 720px) {
-    .shell { flex-direction: column; }
-    .sidebar { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: .8rem 1rem; }
-    .sidebar nav { margin-top: 0; flex-direction: row; }
-    .nav-label, .account-info { display: none; }
-    .topbar { padding: .9rem 1rem; }
+    .account-info { display: none; }
+    .account { gap: .5rem; }
+    .avatar { width: 34px; height: 34px; }
+    .topbar { gap: .75rem; padding: .75rem 1rem; }
+    .topbar h1 { font-size: 1.2rem; }
     .content { padding: 1rem; }
+    .card { padding: 1.15rem; }
     .welcome { padding: 1.35rem; }
+    .welcome h2 { font-size: 1.35rem; }
+    .stats { grid-template-columns: 1fr; gap: .9rem; }
+
+    .page-head { flex-wrap: wrap; }
+    .form-actions { flex-wrap: wrap; }
+    .bulk-actions { flex-wrap: wrap; gap: .6rem; }
+    .lead-tabs { flex-basis: 100%; }
+    .lead-filters input[type=search] { flex: 1 1 0; min-width: 0; }
+    .table th, .table td { padding: .75rem .9rem; }
+    .gallery-grid { grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: .75rem; }
+    .pagination { flex-wrap: wrap; gap: .6rem; }
 }
 
 .side-links { display: flex; flex-wrap: wrap; gap: .4rem .9rem; margin: 0 0 1rem; }

@@ -24,21 +24,16 @@ class HomeContent
     public static function sections(): array
     {
         return [
-            'hero' => ['label' => 'Hero', 'hint' => 'The full-screen opening of the page.', 'fields' => [
+            'hero' => ['label' => 'Hero', 'hint' => 'The full-screen opening of the page. The text sits over the top of the photo, so pick one with soft sky or open space above.', 'fields' => [
                 'hero_image' => ['Background image', 'image', 'hero-light.jpg'],
-                'hero_title' => ['Heading, after the site name', 'text', 'Photography'],
-                'hero_title_accent' => ['Heading, second part', 'text', '& Films'],
+                'hero_title' => ['Heading', 'text', '{name}'],
                 'hero_tagline_1' => ['Tagline, first line', 'text', '“Your love story, told'],
                 'hero_tagline_2' => ['Tagline, second line', 'text', 'the way it felt.”'],
             ]],
-            'intro' => ['label' => 'Introduction', 'hint' => null, 'fields' => [
+            'intro' => ['label' => 'Introduction and portfolio', 'hint' => 'The heading above the three portfolio cards.', 'fields' => [
                 'intro_eyebrow' => ['Small label', 'text', 'Weddings · Couples · Portraits'],
                 'intro_heading' => ['Heading', 'text', 'Honest, unhurried photographs for *people in love*'],
                 'intro_text' => ['Text', 'textarea', 'We are a small studio of photographers and filmmakers who believe the best pictures happen between the planned ones. We watch, we wait, and we keep what is real.'],
-            ]],
-            'portfolio' => ['label' => 'Portfolio', 'hint' => 'Three story cards.', 'fields' => [
-                'portfolio_eyebrow' => ['Small label', 'text', 'Portfolio'],
-                'portfolio_heading' => ['Heading', 'text', 'Stories we have *told*'],
                 'portfolio_1_title' => ['Card 1 title', 'text', 'Weddings'],
                 'portfolio_1_caption' => ['Card 1 caption', 'text', 'The whole day, start to finish'],
                 'portfolio_1_image' => ['Card 1 image', 'image', 'portfolio-weddings.jpg'],
@@ -49,33 +44,34 @@ class HomeContent
                 'portfolio_3_caption' => ['Card 3 caption', 'text', 'The little things you chose'],
                 'portfolio_3_image' => ['Card 3 image', 'image', 'portfolio-details.jpg'],
             ]],
-            'about' => ['label' => 'About us', 'hint' => null, 'fields' => [
-                'about_eyebrow' => ['Small label', 'text', 'About us'],
-                'about_heading' => ['Heading', 'text', 'Soft moments, captured *with heart*'],
+            'about' => ['label' => 'About us', 'hint' => 'The story paragraphs, then two people cards.', 'fields' => [
+                'about_heading' => ['Heading', 'text', 'About us'],
                 'about_text_1' => ['First paragraph', 'textarea', '{name} began with a simple idea: a wedding is not a list of shots, it is a story with people in it. So we spend less time directing and more time paying attention.'],
                 'about_text_2' => ['Second paragraph', 'textarea', 'From the nervous laughter before the ceremony to the quiet minute you steal for yourselves, we look for the feeling first and the frame second. The result is a set of photographs and films that still sound like you, years from now.'],
-                'about_signature' => ['Signature', 'text', 'With love, the {name} team'],
-                'about_button' => ['Button text', 'text', 'Meet us'],
-                'about_image' => ['Main image', 'image', 'about.jpg'],
-                'about_image_small' => ['Small overlapping image', 'image', 'gallery-03.jpg'],
+                'about_signature' => ['Closing line', 'text', 'With love, the {name} team'],
+                'about_image' => ['Person 1 photo', 'image', 'about.jpg'],
+                'team_1_name' => ['Person 1 name', 'text', 'Our photographers'],
+                'team_1_role' => ['Person 1 role', 'text', 'Weddings & portraits'],
+                'about_image_small' => ['Person 2 photo', 'image', 'gallery-03.jpg'],
+                'team_2_name' => ['Person 2 name', 'text', 'Our filmmakers'],
+                'team_2_role' => ['Person 2 role', 'text', 'Wedding films'],
             ]],
-            'headings' => ['label' => 'Section headings', 'hint' => 'Titles above Services, Gallery, Reviews and Journal. Services, gallery photos, reviews and blogs themselves are managed in their own menus.', 'fields' => [
+            'headings' => ['label' => 'Section headings', 'hint' => 'Titles above Services, Reviews and Journal. Services, gallery photos, reviews and blogs themselves are managed in their own menus.', 'fields' => [
                 'services_eyebrow' => ['Services, small label', 'text', 'Services'],
                 'services_heading' => ['Services, heading', 'text', 'What we *do*'],
-                'gallery_eyebrow' => ['Gallery, small label', 'text', 'Gallery'],
-                'gallery_heading' => ['Gallery, heading', 'text', 'A few favourite *frames*'],
                 'reviews_eyebrow' => ['Reviews, small label', 'text', 'Kind words'],
                 'reviews_heading' => ['Reviews, heading', 'text', 'From our *couples*'],
                 'journal_eyebrow' => ['Journal, small label', 'text', 'Journal'],
                 'journal_heading' => ['Journal, heading', 'text', 'Notes from *the studio*'],
             ]],
-            'quote' => ['label' => 'Quote', 'hint' => null, 'fields' => [
+            'quote' => ['label' => 'Quote', 'hint' => 'Shown under the gallery slider.', 'fields' => [
                 'quote_text' => ['Quote', 'text', 'We do not pose moments. We wait for them.'],
+                'quote_author' => ['Quote author', 'text', '{name}'],
             ]],
-            'cta' => ['label' => 'Call to action', 'hint' => 'The banner above the contact form.', 'fields' => [
-                'cta_eyebrow' => ['Small label', 'text', 'Let\'s begin'],
-                'cta_heading' => ['Heading', 'text', 'Tell us about *your day*'],
-                'cta_button' => ['Button text', 'text', 'Get in touch'],
+            'cta' => ['label' => 'Call to action', 'hint' => 'The photo banner above the contact form.', 'fields' => [
+                'cta_eyebrow' => ['Small label', 'text', 'Moments, framed in time'],
+                'cta_heading' => ['Heading', 'text', 'Tell us about your day'],
+                'cta_button' => ['Button text', 'text', 'Contact us'],
                 'cta_image' => ['Background image', 'image', 'cta.jpg'],
             ]],
             'contact' => ['label' => 'Contact section', 'hint' => 'Email, phone and address come from Settings.', 'fields' => [

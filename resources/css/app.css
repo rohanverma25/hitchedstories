@@ -9,14 +9,6 @@
 @source '../views/components';
 @source '../views/home.blade.php';
 
-@font-face {
-    font-family: "Devira";
-    font-weight: 400;
-    font-style: normal;
-    font-display: swap;
-    src: url("../../public/fonts/derivia-regular-webfont.woff") format("woff");
-}
-
 @theme static {
     --breakpoint-md: 56.25rem;
 
@@ -32,9 +24,10 @@
     --color-ash: #a9a59d;
     --color-cream: #f1e6cf;
     --color-error: #a3362f;
+    --color-wine: #3d0606;
 
-    --font-display: "Devira", "Forum", Georgia, serif;
-    --font-body: "Montserrat", Arial, sans-serif;
+    --font-display: "Forum", Georgia, serif;
+    --font-body: "Cormorant Garamond", Georgia, serif;
 
     --ease-site: cubic-bezier(.2, .7, .2, 1);
     --default-transition-timing-function: var(--ease-site);
@@ -56,13 +49,14 @@
 @custom-variant solid (&:where(.is-solid, .is-solid *, .page-plain *));
 @custom-variant menu-open (&:where(.menu-open *));
 
+/* Boxed width: a thin, even margin on both sides, as on the reference design. */
 @utility page-width {
-    width: min(1240px, 100% - 3rem);
+    width: min(1600px, 100% - 2 * clamp(1rem, 2.4vw, 2.5rem));
     margin-inline: auto;
 }
 
 @utility section-y {
-    padding-block: clamp(4.5rem, 10vw, 4.5rem);
+    padding-block: clamp(3rem, 5.4vw, 5rem);
 }
 
 @utility line-icon {
@@ -75,29 +69,23 @@
 
 @layer base {
     html { scroll-behavior: smooth; scroll-padding-top: 80px; }
-    .section-y{
-        padding: 60px 0px !important;
-    }
     body {
         font-family: var(--font-body);
-        font-size: 1rem;
-        line-height: 1.65;
+        font-size: 1.125rem;
+        line-height: 1.75;
         color: var(--color-ink);
         background: var(--color-paper);
         -webkit-font-smoothing: antialiased;
         overflow-x: hidden;
-
-        @variant max-md { font-size: 1.15rem; }
     }
 
-    ::selection { background: var(--color-gold); color: #fff; }
+    ::selection { background: var(--color-ink); color: #fff; }
 
-    h1, h2, h3 { font-family: var(--font-display); font-weight: 400; line-height: 1.12; letter-spacing: .01em; text-transform: uppercase; }
-    h1 { font-size: clamp(2.6rem, 6.4vw, 5.4rem); }
-    h2 { font-size: clamp(2rem, 4vw, 3.3rem); }
-    h3 { font-size: 1.65rem; }
-    h1 em, h2 em { font-family: var(--font-body); font-style: italic; font-weight: 300; }
-    h2 em { color: var(--color-gold); }
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 400; }
+    h1 { font-size: clamp(2.1rem, 3.8vw, 3.375rem); line-height: 1.15; letter-spacing: .12em; text-transform: uppercase; }
+    h2 { font-size: clamp(1.65rem, 2.4vw, 2.125rem); line-height: 1.4; }
+    h3 { font-size: 1.375rem; line-height: 1.45; letter-spacing: .15em; text-transform: uppercase; }
+    h1 em, h2 em { font-family: var(--font-body); font-style: italic; }
 
     :focus-visible { outline: 1px solid currentColor; outline-offset: 4px; }
 

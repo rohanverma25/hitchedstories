@@ -13,7 +13,7 @@
 </head>
 <body>
     <div class="shell">
-        <aside class="sidebar">
+        <aside class="sidebar" id="admin-menu">
             <div class="brand">{{ config('app.name') }}<span>Admin</span></div>
             <nav>
                 <div class="nav-label">Menu</div>
@@ -59,8 +59,13 @@
             </nav>
         </aside>
 
+        <div class="menu-backdrop" hidden></div>
+
         <div class="main">
             <header class="topbar">
+                <button type="button" class="menu-button" aria-controls="admin-menu" aria-expanded="false" aria-label="Open menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16"/><path d="M4 12h16"/><path d="M4 17h16"/></svg>
+                </button>
                 <h1>@yield('title', 'Admin')</h1>
                 <div class="account">
                     <div class="avatar" aria-hidden="true">{{ strtoupper(substr(auth('admin')->user()->name, 0, 1)) }}</div>
@@ -89,6 +94,28 @@
         </div>
     </div>
 
+    <script>
+        // On small screens the sidebar slides in from the left.
+        (function () {
+            var button = document.querySelector('.menu-button');
+            var backdrop = document.querySelector('.menu-backdrop');
+
+            function setMenu(open) {
+                document.body.classList.toggle('menu-open', open);
+                backdrop.hidden = !open;
+                button.setAttribute('aria-expanded', String(open));
+                button.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+            }
+
+            button.addEventListener('click', function () {
+                setMenu(!document.body.classList.contains('menu-open'));
+            });
+            backdrop.addEventListener('click', function () { setMenu(false); });
+            document.addEventListener('keydown', function (event) {
+                if (event.key === 'Escape') setMenu(false);
+            });
+        })();
+    </script>
     @stack('scripts')
 </body>
 </html>
