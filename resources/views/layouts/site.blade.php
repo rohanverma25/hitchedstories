@@ -33,12 +33,12 @@
     <header id="site-header" class="fixed inset-x-0 top-0 z-50 grid h-[118px] grid-cols-[1fr_auto] items-center gap-8 px-[clamp(1rem,2.4vw,2.5rem)] text-ink transition-[background-color,color,height,box-shadow] duration-400 max-md:h-[88px] md:grid-cols-[1fr_auto_1fr] solid:h-[72px] solid:bg-black solid:text-white solid:shadow-[0_1px_0_rgb(255_255_255/.08)] menu-open:bg-transparent menu-open:text-ink menu-open:shadow-none">
         <nav class="flex gap-[clamp(1.5rem,3vw,3.1rem)] max-md:hidden" aria-label="Primary">
             @foreach (array_slice($links, 0, 3) as $anchor => $label)
-                <a class="{{ $underlineLink }}" href="{{ $home }}#{{ $anchor }}">{{ $label }}</a>
+                <a class="{{ $underlineLink }}" href="{{ $home }}#{{ $anchor }}" style="color:#fff">{{ $label }}</a>
             @endforeach
         </nav>
 
         {{-- The logo sits on a small square wine-coloured tile. --}}
-        <a class="grid size-[84px] place-items-center leading-none text-white transition-[width,height] duration-400 max-md:size-[60px] max-md:p-[6px] solid:size-[52px] solid:p-[5px]" href="{{ $home }}#top" aria-label="{{ $site['name'] }} home">
+        <a class="grid size-[84px] place-items-center leading-none text-white transition-[width,height] duration-400 max-md:size-[60px] max-md:p-[6px] solid:size-[52px] solid:p-[5px]" href="{{ $home }}#top" aria-label="{{ $site['name'] }} home" style="width: 90px;">
             @if ($site['logo'])
                 <img class="size-full object-contain" src="{{ $site['logo'] }}" alt="{{ $site['name'] }}">
             @else
@@ -48,13 +48,13 @@
 
         <nav class="flex justify-end gap-[clamp(1.5rem,3vw,3.1rem)] max-md:hidden" aria-label="Secondary">
             @foreach (array_slice($links, 3) as $anchor => $label)
-                <a class="{{ $underlineLink }}" href="{{ $home }}#{{ $anchor }}">{{ $label }}</a>
+                <a class="{{ $underlineLink }}" href="{{ $home }}#{{ $anchor }}" style="color:#fff">{{ $label }}</a>
             @endforeach
         </nav>
 
         <button class="menu-toggle group size-11 cursor-pointer justify-self-end md:hidden" type="button" aria-expanded="false" aria-controls="mobile-menu" aria-label="Open menu">
-            <span class="mx-auto my-[7px] block h-px w-[26px] bg-current transition-transform duration-350 group-aria-expanded:translate-y-1 group-aria-expanded:rotate-45"></span>
-            <span class="mx-auto my-[7px] block h-px w-[26px] bg-current transition-transform duration-350 group-aria-expanded:-translate-y-1 group-aria-expanded:-rotate-45"></span>
+            <span class="mx-auto my-[7px] block h-px w-[26px] bg-white transition-transform duration-350 group-aria-expanded:translate-y-1 group-aria-expanded:rotate-45"></span>
+            <span class="mx-auto my-[7px] block h-px w-[26px] bg-white transition-transform duration-350 group-aria-expanded:-translate-y-1 group-aria-expanded:-rotate-45"></span>
         </button>
     </header>
 

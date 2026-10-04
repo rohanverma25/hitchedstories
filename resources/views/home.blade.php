@@ -29,8 +29,8 @@
     {{-- Hero: the heading sits in the open sky at the top of a tall, full-bleed photo. --}}
     <section class="relative isolate flex min-h-svh flex-col items-center overflow-hidden bg-sand text-center md:min-h-[min(87.5vw,1400px)]" id="top">
         <img class="absolute inset-0 -z-1 size-full origin-bottom animate-hero-zoom object-cover object-bottom" src="{{ $img['hero_image'] }}" alt="A couple walking hand in hand across open hills beneath a wide pale sky" fetchpriority="high">
-        {{-- Pale wash at the top keeps the dark heading readable on any photo. --}}
-        <span class="absolute inset-0 -z-1 bg-[linear-gradient(180deg,var(--color-paper)_0%,rgb(249_248_246/.88)_24%,rgb(249_248_246/0)_52%)]" aria-hidden="true"></span>
+        {{-- Dark wash at the top keeps the white heading readable on any photo. --}}
+        <span class="absolute inset-0 -z-1 bg-[linear-gradient(180deg,rgb(0_0_0/.6)_0%,rgb(0_0_0/.35)_24%,rgb(0_0_0/0)_52%)]" aria-hidden="true"></span>
         <div class="animate-fade-up px-6 pt-[clamp(10rem,15vw,13.4rem)]">
             <h1 class="mx-auto max-w-[12.5em] text-white">{{ $c['hero_title'] }}</h1>
             <p class="mt-5 font-display text-[.875rem] leading-[1.45] tracking-[.29em] text-white uppercase max-sm:text-[.78rem] max-sm:tracking-[.2em]">{{ $c['hero_tagline_1'] }} <span class="block">{{ $c['hero_tagline_2'] }}</span></p>
@@ -61,7 +61,7 @@
     <section class="pb-[clamp(3rem,5.4vw,5rem)]" id="about">
         <div class="reveal page-width max-w-[900px] text-center">
             <h2 class="mb-6">{{ $em($c['about_heading']) }}</h2>
-            <div class="grid gap-6 text-[.875rem] leading-[1.71]">
+            <div class="grid gap-6 text-[.975rem] leading-[1.71]">
                 <p>{{ $c['about_text_1'] }}</p>
                 <p>{{ $c['about_text_2'] }}</p>
                 <p>{{ $c['about_signature'] }}</p>
@@ -69,15 +69,17 @@
         </div>
 
         {{-- Two people cards; the sand panel starts partway down the photos. --}}
-        <div class="page-width relative isolate mt-[clamp(2.5rem,4vw,3.75rem)] grid grid-cols-1 gap-12 pb-[clamp(2.5rem,3.5vw,3rem)] before:absolute before:inset-x-0 before:top-[clamp(9rem,21vw,19rem)] before:bottom-0 before:-z-1 before:bg-sand md:grid-cols-2 md:gap-4 max-md:before:top-[7rem]">
+        <div class="page-width relative isolate mt-[clamp(2.5rem,4vw,3.75rem)] grid grid-cols-1 gap-12 pb-[clamp(2.5rem,3.5vw,3rem)] before:absolute before:inset-x-0 before:top-[clamp(9rem,21vw,19rem)] before:bottom-0 before:-z-1 before:bg-sand md:grid-cols-1 md:gap-4 max-md:before:top-[7rem]">
             @foreach ($team as $index => [$name, $role, $photo])
-                <figure @class(['reveal text-center', $stagger[$index]])>
-                    <img class="mx-auto aspect-[500/456] w-[min(500px,80%)] object-cover" src="{{ $photo }}" alt="{{ $name }}" loading="lazy">
-                    <figcaption class="mt-[clamp(2rem,3.8vw,3.4rem)]">
-                        <h3>{{ $name }}</h3>
-                        <p class="mt-3 text-[#373737]">{{ $role }}</p>
-                    </figcaption>
-                </figure>
+                @if($index === 0)
+                    <figure @class(['reveal text-center', $stagger[$index]])>
+                        <img class="mx-auto aspect-[500/456] w-[min(500px,80%)] object-cover" src="{{ $photo }}" alt="{{ $name }}" loading="lazy">
+                        <figcaption class="mt-[clamp(2rem,3.8vw,3.4rem)]">
+                            <h3>{{ $name }}</h3>
+                            <p class="mt-3 text-[#373737]">{{ $role }}</p>
+                        </figcaption>
+                    </figure>
+                @endif
             @endforeach
         </div>
     </section>
@@ -99,10 +101,12 @@
         </button>
     </section>
 
-    <section class="pt-[clamp(4rem,7.5vw,7rem)] pb-[clamp(2rem,4vw,3rem)]">
+    <section style="padding:50px 0px;background: #e1a239;">
         <figure class="reveal page-width max-w-[900px] text-center">
-            <blockquote class="font-display text-[clamp(1.6rem,2.55vw,2.25rem)] leading-[1.17] text-[#373737]">"{{ $c['quote_text'] }}"</blockquote>
-            <figcaption class="mt-[clamp(2.5rem,5vw,3.5rem)] font-display text-[.875rem] tracking-[.29em] uppercase">{{ $c['quote_author'] }}</figcaption>
+            <blockquote class="font-display text-[clamp(1.6rem,2.55vw,2.25rem)] leading-[1.17] text-[#373737]" style="
+    color: #fff;
+    font-size: 45px;">"{{ $c['quote_text'] }}"</blockquote>
+            <figcaption style="margin-top:10px; color:#fff" class="font-display text-[.875rem] tracking-[.29em] uppercase" >{{ $c['quote_author'] }}</figcaption>
         </figure>
     </section>
 
@@ -136,16 +140,14 @@
                 <h2>{{ $em($c['reviews_heading']) }}</h2>
             </div>
 
-            <div class="reveal mx-auto grid max-w-[1020px] grid-cols-2 items-center gap-[clamp(.75rem,3vw,2.5rem)] md:grid-cols-[auto_minmax(0,1fr)_auto]" id="review-slider" role="region" aria-roledescription="carousel" aria-label="Reviews from our couples">
+            <div class="reveal mx-auto grid max-w-[1320px] grid-cols-2 items-center gap-[clamp(.75rem,3vw,2.5rem)] md:grid-cols-[auto_minmax(0,1fr)_auto]" id="review-slider" role="region" aria-roledescription="carousel" aria-label="Reviews from our couples">
                 <button type="button" class="{{ $arrowBtn }} max-md:row-start-2 max-md:mt-2 max-md:justify-self-end" data-review="prev" aria-label="Previous review">
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg>
                 </button>
 
-                <div class="review-track flex snap-x snap-mandatory overflow-x-auto [scrollbar-width:none] max-md:col-span-full max-md:row-start-1 md:col-start-2 [&::-webkit-scrollbar]:hidden" tabindex="0">
+                <div class="review-track flex snap-x snap-mandatory gap-[clamp(1rem,2vw,1.5rem)] overflow-x-auto [scrollbar-width:none] max-md:col-span-full max-md:row-start-1 md:col-start-2 [&::-webkit-scrollbar]:hidden" tabindex="0">
                     @foreach ($reviews as $index => $review)
-                        <figure class="review-slide relative shrink-0 basis-full snap-center bg-paper px-[clamp(1.5rem,5vw,4.5rem)] py-[clamp(2.5rem,5vw,4rem)] text-center" role="group" aria-roledescription="slide" aria-label="{{ $index + 1 }} of {{ count($reviews) }}">
-                            <div class="mb-6 text-[.85rem] tracking-[.4em] text-ink" role="img" aria-label="{{ $review['rating'] }} out of 5 stars">{{ str_repeat('★', $review['rating']) }}<span class="text-line">{{ str_repeat('★', 5 - $review['rating']) }}</span></div>
-                            <blockquote class="mb-8 font-display text-[clamp(1.3rem,2.2vw,1.75rem)] leading-[1.35] text-[#373737]">{{ $review['text'] }}</blockquote>
+                        <figure class="review-slide relative flex shrink-0 basis-full snap-start flex-col bg-paper px-[clamp(1.5rem,2.5vw,2.5rem)] py-[clamp(2rem,3.5vw,3rem)] text-center md:basis-[calc((100%-clamp(1rem,2vw,1.5rem))/2)] lg:basis-[calc((100%-2*clamp(1rem,2vw,1.5rem))/3)]" role="group" aria-roledescription="slide" aria-label="{{ $index + 1 }} of {{ count($reviews) }}">
                             <figcaption>
                                 @if ($review['photo'])
                                     <img class="mx-auto mb-4 size-16 rounded-full object-cover" src="{{ $review['photo'] }}" alt="" loading="lazy">
@@ -155,6 +157,8 @@
                                     <span class="text-muted">{{ $review['designation'] }}</span>
                                 @endif
                             </figcaption>
+                            <div class="mb-6 text-[.85rem] tracking-[.4em] text-ink" role="img" style="color: #e1a239; font-size: 25px;" aria-label="{{ $review['rating'] }} out of 5 stars">{{ str_repeat('★', $review['rating']) }}<span class="text-line">{{ str_repeat('★', 5 - $review['rating']) }}</span></div>
+                            <blockquote class="mb-8 grow font-display text-[clamp(1.15rem,1.5vw,1.3rem)] leading-[1.45] text-[#373737]">{{ $review['text'] }}</blockquote>
                         </figure>
                     @endforeach
                 </div>
@@ -163,7 +167,7 @@
                     <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg>
                 </button>
 
-                {{-- site.js fills this with one dot button per review. --}}
+                {{-- site.js fills this with one dot button per page of reviews. --}}
                 <div class="review-dots col-span-full mt-3 flex justify-center gap-[.7rem] max-md:row-start-3 [&>button]:size-[9px] [&>button]:cursor-pointer [&>button]:rounded-full [&>button]:border [&>button]:border-stone [&>button]:transition-[background-color,border-color,scale] [&>button]:duration-300 [&>button.is-active]:scale-125 [&>button.is-active]:border-ink [&>button.is-active]:bg-ink" aria-hidden="true"></div>
             </div>
         </div>
@@ -204,7 +208,9 @@
             <div class="reveal px-[clamp(1.5rem,4vw,3.6rem)] py-12 text-white">
                 <p class="mb-4 font-display text-[.875rem]">{{ $c['cta_eyebrow'] }}</p>
                 <h2 class="mb-8">{{ $em($c['cta_heading']) }}</h2>
-                <a class="{{ $btn }} border-white bg-white text-black hover:bg-transparent hover:text-white" href="#contact">{{ $c['cta_button'] }}</a>
+                <a class="{{ $btn }} hover:bg-transparent hover:text-white" style="    background: #e1a239;
+    border-color: #e1a239;
+    color: #fff;" href="#contact">{{ $c['cta_button'] }}</a>
             </div>
         </div>
     </section>
@@ -261,7 +267,9 @@
                         @error('message')<p class="{{ $error }}" id="message-error">{{ $message }}</p>@enderror
                     </div>
                     @error('website')<p class="{{ $error }}">{{ $message }}</p>@enderror
-                    <button type="submit" class="{{ $btnDark }}">Send enquiry</button>
+                    <button type="submit" class="{{ $btnDark }}" style="    background: #e1a239;
+    border-color: #e1a239;
+    color: #fff;">Send enquiry</button>
                 </form>
             </div>
 

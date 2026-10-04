@@ -89,7 +89,8 @@
         });
     }
 
-    // Reviews slider: one review at a time, with arrows, dots and gentle autoplay.
+    // Reviews slider: a page of reviews at a time (three on desktop, fewer on
+    // smaller screens), with arrows, dots and gentle autoplay.
     var reviewSlider = document.getElementById('review-slider');
     if (reviewSlider) {
         var track = reviewSlider.querySelector('.review-track');
@@ -99,12 +100,25 @@
         var dots = [];
         var timer = null;
 
-        var current = function () {
-            return Math.round(track.scrollLeft / track.clientWidth);
+        // How many reviews fit in view, read from the CSS layout.
+        var perPage = function () {
+            var step = slides.length > 1 ? slides[1].offsetLeft - slides[0].offsetLeft : track.clientWidth;
+            return Math.max(1, Math.round(track.clientWidth / step));
         };
-        var goTo = function (index) {
-            var target = (index + slides.length) % slides.length;
-            track.scrollTo({ left: target * track.clientWidth, behavior: reduceMotion ? 'auto' : 'smooth' });
+        var pageCount = function () {
+            return Math.ceil(slides.length / perPage());
+        };
+        var current = function () {
+            var maxScroll = track.scrollWidth - track.clientWidth;
+            if (track.scrollLeft >= maxScroll - 2) return pageCount() - 1;
+            var step = slides.length > 1 ? slides[1].offsetLeft - slides[0].offsetLeft : track.clientWidth;
+            return Math.round(track.scrollLeft / (step * perPage()));
+        };
+        var goTo = function (page) {
+            var pages = pageCount();
+            var target = (page + pages) % pages;
+            var slide = slides[target * perPage()];
+            track.scrollTo({ left: slide.offsetLeft - slides[0].offsetLeft, behavior: reduceMotion ? 'auto' : 'smooth' });
         };
         var refresh = function () {
             var active = current();
@@ -115,22 +129,32 @@
             timer = null;
         };
         var start = function () {
-            if (reduceMotion || slides.length < 2 || timer) return;
+            if (reduceMotion || pageCount() < 2 || timer) return;
             timer = setInterval(function () { goTo(current() + 1); }, 6000);
         };
 
-        if (slides.length < 2) {
-            arrows.forEach(function (arrow) { arrow.hidden = true; });
-        } else {
-            slides.forEach(function (_, i) {
+        // One dot per page; rebuilt when the page size changes on resize.
+        var buildDots = function () {
+            var pages = pageCount();
+            arrows.forEach(function (arrow) { arrow.hidden = pages < 2; });
+            if (dots.length === pages || (pages < 2 && !dots.length)) return;
+            dotsWrap.innerHTML = '';
+            dots = [];
+            if (pages < 2) return;
+            for (var i = 0; i < pages; i++) {
                 var dot = document.createElement('button');
                 dot.type = 'button';
                 dot.tabIndex = -1;
-                dot.addEventListener('click', function () { goTo(i); });
+                dot.addEventListener('click', goTo.bind(null, i));
                 dotsWrap.appendChild(dot);
                 dots.push(dot);
-            });
-        }
+            }
+        };
+        buildDots();
+        window.addEventListener('resize', function () {
+            buildDots();
+            refresh();
+        });
 
         arrows.forEach(function (arrow) {
             arrow.addEventListener('click', function () {
